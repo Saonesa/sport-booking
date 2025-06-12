@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservasi Lapangan Olahraga</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#" id="nav-home">Sistem Reservasi Lapangan</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="nav-login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="nav-register">Register</a>
+                    </li>
+                    <li class="nav-item d-none" id="nav-my-reservations">
+                        <a class="nav-link" href="#" id="show-my-reservations">My Reservations</a>
+                    </li>
+                    <li class="nav-item d-none" id="nav-admin-dashboard">
+                        <a class="nav-link" href="#" id="show-admin-dashboard">Admin Dashboard</a>
+                    </li>
+                    <li class="nav-item d-none" id="nav-logout-container">
+                        <a class="nav-link" href="#" id="nav-logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div id="main-content">
+            <h1 class="mb-4">Daftar Lapangan Olahraga</h1>
+            <div id="field-list" class="row">
+            </div>
+        </div>
+
+        <div id="login-form-container" class="mt-5 form-container" style="display: none;">
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="mb-3">
+                    <label for="login-email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="login-email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="login-password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="login-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <p id="login-error" class="text-danger mt-2"></p>
+        </div>
+
+        <div id="register-form-container" class="mt-5 form-container" style="display: none;">
+            <h2>Register</h2>
+            <form id="register-form">
+                <div class="mb-3">
+                    <label for="register-name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="register-name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="register-email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="register-password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-password-confirm" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="register-password-confirm" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            <p id="register-error" class="text-danger mt-2"></p>
+        </div>
+
+        <div id="my-reservations-section" class="mt-5" style="display: none;">
+            <h2>My Reservations</h2>
+            <div id="my-reservations-list">
+            </div>
+            <p id="my-reservations-message" class="text-info"></p>
+        </div>
+
+        <div id="admin-dashboard-section" class="mt-5" style="display: none;">
+            <h2>Admin Dashboard</h2>
+            <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="admin-fields-tab" data-bs-toggle="tab"
+                        data-bs-target="#admin-fields" type="button" role="tab" aria-controls="admin-fields"
+                        aria-selected="true">Manage Fields</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="admin-reservations-tab" data-bs-toggle="tab"
+                        data-bs-target="#admin-reservations" type="button" role="tab" aria-controls="admin-reservations"
+                        aria-selected="false">Manage Reservations</button>
+                </li>
+            </ul>
+            <div class="tab-content mt-3" id="adminTabContent">
+                <div class="tab-pane fade show active" id="admin-fields" role="tabpanel"
+                    aria-labelledby="admin-fields-tab">
+                    <h3>Manage Fields</h3>
+                    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#fieldModal"
+                        id="add-field-btn">Add New Field</button>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Address</th>
+                                <th>Price/Hour</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-fields-table-body">
+                        </tbody>
+                    </table>
+                    <p id="admin-fields-message" class="text-info"></p>
+                </div>
+                <div class="tab-pane fade" id="admin-reservations" role="tabpanel"
+                    aria-labelledby="admin-reservations-tab">
+                    <h3>Manage Reservations</h3>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>User</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-reservations-table-body">
+                        </tbody>
+                    </table>
+                    <p id="admin-reservations-message" class="text-info"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="fieldDetailModal" tabindex="-1" aria-labelledby="fieldDetailModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fieldDetailModalLabel">Field Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4 id="modal-field-name"></h4>
+                    <p><strong>Sport Type:</strong> <span id="modal-field-sport-type"></span></p>
+                    <p><strong>Address:</strong> <span id="modal-field-address"></span></p>
+                    <p><strong>Description:</strong> <span id="modal-field-description"></span></p>
+                    <p><strong>Price per Hour:</strong> Rp<span id="modal-field-price"></span></p>
+
+                    <hr>
+                    <h5>Book This Field</h5>
+                    <div id="reservation-form-container">
+                        <form id="reserve-field-form">
+                            <input type="hidden" id="reserve-field-id">
+                            <div class="mb-3">
+                                <label for="reservation-date" class="form-label">Reservation Date</label>
+                                <input type="date" class="form-control" id="reservation-date" required>
+                                <small class="text-muted">Pilih tanggal untuk melihat slot waktu tersedia.</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="available-slots" class="form-label">Available Time Slots</label>
+                                <select class="form-select" id="available-slots" required>
+                                    <option value="">Select a date first</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success" id="submit-reservation-btn">Book Now</button>
+                        </form>
+                        <p id="reservation-message" class="text-danger mt-2"></p>
+                    </div>
+                    <p id="booking-login-required-message" class="text-warning mt-2" style="display: none;">You must be
+                        logged in to make a reservation.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="fieldModal" tabindex="-1" aria-labelledby="fieldModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fieldModalLabel">Add/Edit Field</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="field-form">
+                        <input type="hidden" id="field-id">
+                        <div class="mb-3">
+                            <label for="field-name" class="form-label">Field Name</label>
+                            <input type="text" class="form-control" id="field-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="field-sport-type" class="form-label">Sport Type</label>
+                            <input type="text" class="form-control" id="field-sport-type" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="field-address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="field-address" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="field-description" class="form-label">Description</label>
+                            <textarea class="form-control" id="field-description" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="field-price" class="form-label">Price per Hour</label>
+                            <input type="number" step="0.01" class="form-control" id="field-price" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Field</button>
+                    </form>
+                    <p id="field-form-message" class="text-danger mt-2"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
