@@ -54,10 +54,10 @@ Aplikasi ini adalah sistem reservasi lapangan olahraga yang dibangun dengan **La
 
 1.  **Clone Repositori:**
     ```bash
-    git clone [https://github.com/USERNAME/sports-field-reservation-laravel.git](https://github.com/USERNAME/sports-field-reservation-laravel.git)
+    git clone https://github.com/Saonesa/sport-booking.git
     cd sports-field-reservation-laravel
     ```
-    *(Ganti `USERNAME` dan `sports-field-reservation-laravel` sesuai dengan detail repositori Anda)*
+   
 
 2.  **Instal Dependensi Composer:**
     ```bash
@@ -103,7 +103,7 @@ Aplikasi ini adalah sistem reservasi lapangan olahraga yang dibangun dengan **La
     ```
     http://localhost:8000/assets/index.html
     ```
-    *(Pastikan folder `assets` (berisi `index.html`, `script.js`, `style.css`) berada di dalam folder `public` dari proyek Laravel Anda agar dapat diakses langsung via server Laravel.)*
+    
 
 ### Akun Pengujian (Setelah `php artisan migrate:fresh --seed`)
 
