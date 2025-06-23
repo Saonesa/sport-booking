@@ -1,61 +1,117 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistem Reservasi Lapangan Olahraga
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi ini adalah sistem reservasi lapangan olahraga yang dibangun dengan **Laravel 12** sebagai backend API RESTful dan **HTML, CSS (Bootstrap), serta Vanilla JavaScript** untuk frontend. Sistem ini dirancang untuk mempermudah proses pencarian, pemesanan, dan pengelolaan lapangan olahraga.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   **Pencarian & Detail Lapangan:** Pengguna dapat melihat daftar lapangan olahraga, mencari berdasarkan jenis olahraga, dan melihat detail lengkap setiap lapangan (alamat, deskripsi, harga per jam).
+-   **Reservasi Online:** Pengguna dapat memilih tanggal dan jam untuk memesan lapangan berdasarkan ketersediaan slot waktu.
+-   **Manajemen Reservasi (User):** Pengguna dapat melihat riwayat reservasi mereka sendiri dan membatalkan reservasi yang masih berstatus `pending` atau `confirmed`.
+-   **Manajemen Lapangan (Admin):** Admin memiliki kemampuan penuh (CRUD - Create, Read, Update, Delete) untuk mengelola data lapangan olahraga.
+-   **Manajemen Reservasi (Admin):** Admin dapat melihat semua reservasi, memperbarui status reservasi (misalnya, dari `pending` ke `confirmed`, `canceled`, atau `completed`), dan menghapus reservasi apa pun.
+-   **Manajemen Pengguna (Admin):** Admin dapat melihat dan mengelola data pengguna (opsional, jika diaktifkan).
+-   **Sistem Role-Based Access Control (RBAC):** Memisahkan hak akses antara `Admin` dan `User` untuk fitur-fitur tertentu.
+-   **API RESTful:** Seluruh interaksi data dilakukan melalui API, memungkinkan frontend yang fleksibel.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Teknologi yang Digunakan
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Backend:**
+-   **Laravel 12:** Framework PHP untuk membangun API RESTful.
+-   **Laravel Sanctum:** Untuk otentikasi API berbasis token.
+-   **MySQL/MariaDB:** Sistem manajemen database.
 
-## Learning Laravel
+**Frontend:**
+-   **HTML5:** Struktur dasar halaman web.
+-   **CSS3 (Bootstrap 5):** Styling dan komponen UI responsif.
+-   **JavaScript (Vanilla JS):** Interaksi dinamis dengan API backend.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Struktur Proyek (High-Level)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   **Backend (Laravel):**
+    -   `app/Models`: `User`, `Field`, `Reservation` (dengan relasi One-to-Many).
+    -   `app/Http/Controllers/Api`: `AuthController`, `FieldController`, `ReservationController`, `UserController`.
+    -   `app/Http/Middleware/AdminMiddleware.php`: Middleware kustom untuk otorisasi admin.
+    -   `routes/api.php`: Definisi semua endpoint API.
+    -   `database/migrations`: Skema database untuk `users`, `fields`, `reservations`.
+    -   `database/seeders`: Data dummy untuk pengujian.
+    -   `bootstrap/app.php`: Konfigurasi inti Laravel 12 (termasuk routing dan middleware).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   **Frontend (HTML/CSS/JS):**
+    -   `public/assets/index.html`: Halaman utama aplikasi.
+    -   `public/assets/style.css`: Styling kustom.
+    -   `public/assets/script.js`: Logika aplikasi frontend, interaksi dengan API.
 
-## Laravel Sponsors
+## Cara Menjalankan Proyek
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Prasyarat
 
-### Premium Partners
+-   PHP >= 8.2
+-   Composer
+-   Node.js & npm (Opsional, jika Anda ingin menggunakan Vite/Mix untuk asset compiling, tetapi tidak wajib untuk setup dasar ini)
+-   MySQL/MariaDB
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Langkah-langkah Instalasi
 
-## Contributing
+1.  **Clone Repositori:**
+    ```bash
+    git clone [https://github.com/USERNAME/sports-field-reservation-laravel.git](https://github.com/USERNAME/sports-field-reservation-laravel.git)
+    cd sports-field-reservation-laravel
+    ```
+    *(Ganti `USERNAME` dan `sports-field-reservation-laravel` sesuai dengan detail repositori Anda)*
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2.  **Instal Dependensi Composer:**
+    ```bash
+    composer install
+    ```
 
-## Code of Conduct
+3.  **Konfigurasi Environment:**
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
+    Edit file `.env` dan konfigurasikan detail database Anda:
+    ```dotenv
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=sports_field_db # Ubah sesuai nama database Anda
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
+    Buat database dengan nama yang sama di server MySQL/MariaDB Anda.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4.  **Jalankan Migrasi dan Seeder:**
+    Ini akan membuat tabel database dan mengisi data awal (user admin, user biasa, dan beberapa lapangan).
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
 
-## Security Vulnerabilities
+5.  **Instal Laravel Sanctum:**
+    ```bash
+    composer require laravel/sanctum
+    php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+    php artisan migrate
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6.  **Jalankan Server Laravel:**
+    ```bash
+    php artisan serve
+    ```
 
-## License
+7.  **Akses Aplikasi:**
+    Buka browser Anda dan navigasikan ke:
+    ```
+    http://localhost:8000/assets/index.html
+    ```
+    *(Pastikan folder `assets` (berisi `index.html`, `script.js`, `style.css`) berada di dalam folder `public` dari proyek Laravel Anda agar dapat diakses langsung via server Laravel.)*
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Akun Pengujian (Setelah `php artisan migrate:fresh --seed`)
+
+-   **Admin:**
+    -   Email: `admin@example.com`
+    -   Password: `password`
+-   **User Biasa:**
+    -   Email: `user@example.com`
+    -   Password: `password`
+
+
